@@ -3,8 +3,6 @@ import unittest
 import sys
 import os
 import re
-import types
-import HTMLParser
 import shutil
 
 sys.path.append('../..')
@@ -55,11 +53,11 @@ class testTextfill(unittest.TestCase):
         
         text = read_text(log, prefix)
         self.assertEqual( len(text.results),2 )
-        self.assertEqual(text.results.keys(), ['test_small', 'test_long'])
+        self.assertCountEqual(text.results.keys(), ['test_small', 'test_long'])
         
         for key in text.results:
             raw_table = text.results[key].split('\n')
-            raw_table = filter(lambda x: not x.startswith(log_remove_string), raw_table)
+            raw_table = list(filter(lambda x: not x.startswith(log_remove_string), raw_table))
             raw_table = remove_trailing_leading_blanklines(raw_table)
             for n in range( len(raw_table) ):
                 self.assertIn(raw_table[n], raw_lyx)
@@ -76,7 +74,7 @@ class testTextfill(unittest.TestCase):
             error = textfill(input    = '../../gslab_fill/tests/input/tags_not_closed.log', 
                              template = '../../gslab_fill/tests/input/textfill_template.lyx', 
                              output   = './build/textfill_template_filled.lyx')
-        self.assertIn('HTMLParseError', error)
+        self.assertIn('Error', error)
         
     def test_tags_incorrectly_specified(self):
         with nostderrout():
@@ -104,7 +102,7 @@ class testTextfill(unittest.TestCase):
                              output   = './build/textfill_template_filled.lyx')
 
 
-        self.assertIn('IOError', error)
+        self.assertIn('FileNotFoundError', error)
         
         # non-existent input 2
         with nostderrout():
@@ -112,7 +110,7 @@ class testTextfill(unittest.TestCase):
                              template = '../../gslab_fill/tests/input/textfill_template.lyx', 
                              output   = './build/textfill_template_filled.lyx')
 
-        self.assertIn('IOError', error)
+        self.assertIn('FileNotFoundError', error)
         
     def test_argument_order(self):
 

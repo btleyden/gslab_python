@@ -107,7 +107,7 @@ class gencat(object):
         shortened to their filenames for writing only.
         '''
         outfile_path = os.path.join(self.path_out, name)
-        with open(outfile_path, 'wb') as outfile:
+        with open(outfile_path, 'w') as outfile:
             
             for key in sorted(dict.keys()):
                 outfile.write(key)
@@ -139,7 +139,7 @@ class gencat(object):
             for zip_val in self.zip_dict[zip_key]:
                 catfilename = zip_val + '.txt'
                 catfilepath = os.path.join(catdirpath, catfilename)
-                with open(catfilepath, 'ab') as catfile:
+                with open(catfilepath, 'a') as catfile:
                     concat_key = zip_val 
                     for concat_val in self.concat_dict[concat_key]:
                         catfile.write('\nNEWFILE\nFILENAME: %s\n\n' % (os.path.basename(concat_val)))

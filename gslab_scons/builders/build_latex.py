@@ -1,6 +1,6 @@
 import os
-
-from gslab_builder import GSLabBuilder
+import subprocess
+from .gslab_builder import GSLabBuilder
 
 
 def build_latex(target, source, env):

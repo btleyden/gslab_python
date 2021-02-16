@@ -2,7 +2,7 @@ import os
 import copy
 import warnings
 
-from gslab_builder import GSLabBuilder
+from .gslab_builder import GSLabBuilder
 import gslab_scons.misc as misc
 
 
@@ -104,7 +104,7 @@ class AnythingBuilder(GSLabBuilder):
         '''
         super(AnythingBuilder, self).execute_system_call()
         if self.origin_log_file is not None:
-            with open(log_file, 'ab') as sconscript_log:
+            with open(log_file, 'a') as sconscript_log:
                 with open(origin_log_file, 'rU') as origin_log:
                     sconscript_log.write(origin_log.read())
             os.remove(origin_log_file)

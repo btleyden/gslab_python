@@ -7,5 +7,5 @@ These are `tablefill` and `textfill`. Please see their docstrings for informatio
 on their use and functionalities.
 '''
 
-from tablefill import tablefill
-from textfill import textfill
+from .tablefill import tablefill
+from .textfill import textfill

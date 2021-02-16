@@ -4,8 +4,8 @@ import os
 import argparse
 import types
 import traceback
-import textfill_info
-from HTMLParser import HTMLParser, HTMLParseError
+from . import textfill_info
+from html.parser import HTMLParser
 
 
 def textfill(**kwargs):
@@ -14,13 +14,13 @@ def textfill(**kwargs):
         text = parse_text(args)
         insert_text(args, text)
         exitmessage = args['template'] + ' filled successfully by textfill'
-        print exitmessage
+        print(exitmessage)
         return exitmessage	
         
     except:
-        print 'Error Found'
+        print('Error Found')
         exitmessage = traceback.format_exc()
-        print exitmessage
+        print(exitmessage)
         return exitmessage    
 
 # Set textfill's docstring as the text in "textfill_info.py"
@@ -61,7 +61,7 @@ def parse_text(args):
 
 def read_text(input, prefix):
     data = ''
-    if isinstance(input, types.StringTypes):
+    if isinstance(input, str):
         input = [input]
     for file in input:
         data += open(file, 'rU').read()
@@ -103,16 +103,16 @@ class text_parser(HTMLParser):
     def close(self):
         for tag in self.results.keys():
             if tag not in self.closed:
-                raise HTMLParseError('Tag %s is not closed' % tag)
+                raise Error('Tag %s is not closed' % tag)
 
 
 def clean_text(text, remove_echoes):
     for key in text.results:
         data = text.results[key].split('\n')
         if remove_echoes:
-            data = filter(lambda x: not x.startswith('.'), data)
+            data = list(filter(lambda x: not x.startswith('.'), data))
         else:
-            data = filter(lambda x: not x.startswith('. insert_tag'), data)
+            data = list(filter(lambda x: not x.startswith('. insert_tag'), data))
         data = remove_trailing_leading_blanklines(data)
         text.results[key] = '\n'.join(data)
     
@@ -155,7 +155,7 @@ def insert_text(args,text):
         else:
             loop = False
     
-    outfile = open(args['output'], 'wb')
+    outfile = open(args['output'], 'w')
     outfile.write( ''.join(lyx_text) )
     outfile.close()
     

@@ -8,7 +8,7 @@ import sys
 import shutil
 import subprocess
 
-from _exception_classes import ReleaseError
+from ._exception_classes import ReleaseError
 
 def release(vers, org, repo,
             DriveReleaseFiles = [],  
@@ -68,7 +68,7 @@ def release(vers, org, repo,
         # Delay
         time.sleep(1)
     
-        if isinstance(DriveReleaseFiles, basestring):
+        if isinstance(DriveReleaseFiles, str):
             DriveReleaseFiles = [DriveReleaseFiles]
 
         # Get release ID
@@ -76,12 +76,12 @@ def release(vers, org, repo,
         # Check that the request was successful
         json_releases.raise_for_status()
 
-        json_output    = json_releases.content
-        json_split     = json_output.split(',')
+        json_output    = json_releases.json()
+        assert len(json_output) == 1
+        json_split     = json_output[0]
         # The id for each tag appears immediately before its tag name
         # in the releases json object.
-        tag_name_index = json_split.index('"tag_name":"%s"' % tag_name)
-        release_id     = json_split[tag_name_index - 1].split(':')[1]
+        release_id     = json_split['tag_name']
     
         # Get root directory name on drive
         path       = local_release.split('/')
@@ -126,7 +126,7 @@ def release(vers, org, repo,
             make_paths = lambda s: 'release/%s/%s/%s' % (dir_name, vers, s)
             DriveReleaseFiles = map(make_paths, DriveReleaseFiles)
 
-        with open('drive_assets.txt', 'wb') as f:
+        with open('drive_assets.txt', 'w') as f:
             f.write('\n'.join([drive_header] + DriveReleaseFiles))
 
         upload_asset(github_token = github_token, 
@@ -211,7 +211,7 @@ def execute_up_to_date(command):
     Return the log as a list of stripped strings.
     '''
     logpath = 'temp_log_up_to_date'
-    with open(logpath, 'wb') as temp_log:
+    with open(logpath, 'w') as temp_log:
         subprocess.call(command, stdout = temp_log, stderr = temp_log, shell = True)
     with open(logpath, 'rU') as temp_log:
         output = [line.strip() for line in temp_log]
@@ -244,7 +244,7 @@ def extract_dot_git(path = '.git'):
                            (path, str(err)))
 
     # Clean each line of this file's contents
-    details = map(lambda s: s.strip(), details)
+    details = list(map(lambda s: s.strip(), details))
     
     # Search for the line specifying information for origin
     origin_line = [bool(re.search('\[remote "origin"\]', detail)) \

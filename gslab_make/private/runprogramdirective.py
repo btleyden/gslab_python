@@ -5,9 +5,9 @@ import re
 import shutil
 import subprocess
 
-from exceptionclasses import CustomError, CritError, SyntaxError, LogicError
-import messages as messages
-import metadata as metadata
+from gslab_make.private.exceptionclasses import CritError, SyntaxError
+import gslab_make.private.messages as messages
+import gslab_make.private.metadata as metadata
 
 
 class RunProgramDirective(object):
@@ -127,7 +127,7 @@ class RunProgramDirective(object):
             if replace_option:
                 value = self.option_dict.get(replace_option)
                 if value:
-                    print messages.note_option_replaced % (replace_option, option)
+                    print(messages.note_option_replaced % (replace_option, option))
                     del self.option_dict[replace_option]
                     assigned_value = value
 
@@ -164,7 +164,7 @@ class RunProgramDirective(object):
 
 
     def execute_run(self, command):
-        print '\n'
+        print('\n')
         current_directory = os.getcwd()
 
         if self.changedir:
@@ -174,7 +174,7 @@ class RunProgramDirective(object):
             tempname = current_directory + '/make-templog.txt'
         else:
             tempname = os.path.abspath(self.log)
-        TEMPFILE = open(tempname, 'wb')            
+        TEMPFILE = open(tempname, 'w')
 
         if self.makelog:
             if not (metadata.makelog_started and os.path.isfile(self.makelog)):
@@ -182,15 +182,15 @@ class RunProgramDirective(object):
 
             # Open main log file
             try:
-                LOGFILE = open(self.makelog, 'ab')
+                LOGFILE = open(self.makelog, 'a')
             except Exception as errmsg:
-                print errmsg
+                print(errmsg)
                 raise CritError(messages.crit_error_log % self.makelog)
 
             try:
             # Execute command and print content to LOGFILE
-                print 'Executing: ', command
-                print >>LOGFILE, '\n\nExecute: ', command
+                print('Executing: ', command)
+                print('\n\nExecute: ', command, file=LOGFILE)
                 subprocess.check_call(command, shell = True, stdout = TEMPFILE, stderr = TEMPFILE)
                 TEMPFILE.close()
                 LOGFILE.write(open(tempname, 'rU').read())
@@ -199,20 +199,20 @@ class RunProgramDirective(object):
             # If fails then print errors to LOGFILE
                 TEMPFILE.close()
                 LOGFILE.write(open(tempname, 'rU').read())
-                print messages.crit_error_bad_command % command, '\n', str(errmsg)
-                print >> LOGFILE, messages.crit_error_bad_command % command, '\n', str(errmsg)
+                print(messages.crit_error_bad_command % command, '\n', str(errmsg))
+                print(messages.crit_error_bad_command % command, '\n', str(errmsg), file=LOGFILE)
                 LOGFILE.close()
         else:
             try:
             # Execute command
-                print 'Executing: ', command
+                print('Executing: ', command)
                 subprocess.check_call(command, shell = True, stdout = TEMPFILE, stderr = TEMPFILE)
                 TEMPFILE.close()
             except Exception as errmsg:
             # If fails then print errors
                 TEMPFILE.close()
-                print messages.crit_error_bad_command % command, '\n', str(errmsg)
-                print >> TEMPFILE, messages.crit_error_bad_command % command, '\n', str(errmsg)
+                print(messages.crit_error_bad_command % command, '\n', str(errmsg))
+                print(messages.crit_error_bad_command % command, '\n', str(errmsg), file=TEMPFILE)
 
         if not self.log:
             os.remove(tempname)
@@ -226,11 +226,11 @@ class RunProgramDirective(object):
                 raise CritError(messages.crit_error_nomakelog % self.makelog)
             if os.path.abspath(default_log) != os.path.abspath(self.log):
                 # Append default_log to main log
-                LOGFILE = open(self.makelog, 'ab')
+                LOGFILE = open(self.makelog, 'a')
                 try:
                     LOGFILE.write(open(default_log, 'rU').read())
                 except Exception as errmsg:
-                    print errmsg
+                    print(errmsg)
                     raise CritError(messages.crit_error_no_file % default_log)
                 LOGFILE.close()
 
@@ -249,11 +249,11 @@ class RunProgramDirective(object):
 
             if os.path.abspath(default_lst) != os.path.abspath(self.lst):
                 # Append default_lst to main log
-                LOGFILE = open(self.makelog, 'ab')
+                LOGFILE = open(self.makelog, 'a')
                 try:
                     LOGFILE.write(open(default_lst, 'rU').read())
                 except Exception as errmsg:
-                    print errmsg
+                    print(errmsg)
                     raise CritError(messages.crit_error_no_file % default_lst)
                 LOGFILE.close()
 

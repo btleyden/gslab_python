@@ -7,8 +7,8 @@ import shutil
 import requests
 import copy
 # Import modules containing gslab_scons test helper functions
-import _test_helpers as helpers
-import _side_effects as fx
+import gslab_scons.tests._test_helpers as helpers
+import gslab_scons.tests._side_effects as fx
 
 # Ensure that Python can find and load the GSLab libraries
 os.chdir(os.path.dirname(os.path.realpath(__file__)))

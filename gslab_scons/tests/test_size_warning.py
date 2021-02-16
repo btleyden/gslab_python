@@ -3,15 +3,13 @@ import sys
 import os
 import re
 import mock
-from StringIO import StringIO
+from io import StringIO
 
 # Ensure that Python can find and load the GSLab libraries
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append('../..')
 
-import gslab_scons
-import gslab_scons.size_warning as sw
-from gslab_scons._exception_classes import ReleaseError
+import gslab_scons.tests.test_size_warning as sw
 from gslab_make.tests import nostderrout
 
 
@@ -118,7 +116,7 @@ class TestSizeWarning(unittest.TestCase):
         for keywords in expect_true:
             self.assertTrue(sw._is_subpath(**keywords))
         for keywords in expect_false:
-            print keywords
+            print(keywords)
             self.assertFalse(sw._is_subpath(**keywords))   
 
     @mock.patch('gslab_scons.size_warning.os.path.isfile')

@@ -115,6 +115,7 @@ class GSLabBuilder(object):
         '''
         self.check_code_extension()
         start_time = misc.current_time()
+        print('Running: {}'.format(self.system_call))
         self.do_call()
         self.check_targets()
         end_time =  misc.current_time()    
@@ -186,8 +187,9 @@ class GSLabBuilder(object):
             content = f.read()
             f.seek(0, 0)
             builder_log_msg = '*** Builder log created: {%s}\n' \
+                              '\n' \
                               '*** Builder log completed: {%s}\n%s' \
                               % (start_time, end_time, content)
-        with open(self.log_file, mode = 'wb') as f:
+        with open(self.log_file, mode = 'w') as f:
             f.write(builder_log_msg)
         return None

@@ -1,12 +1,9 @@
 import unittest
 import sys
 import os
-import re
 import mock
-import tempfile
-import shutil
 # Import module containing gslab_scons testing side effects
-import _side_effects as fx
+import gslab_scons.tests._side_effects as fx
 
 # Ensure that Python can find and load the GSLab libraries
 os.chdir(os.path.dirname(os.path.realpath(__file__)))

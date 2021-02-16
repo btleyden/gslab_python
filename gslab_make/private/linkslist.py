@@ -1,11 +1,7 @@
 #! /usr/bin/env python
-
-import os
-import re
-
-from linkdirectives import *
-from preliminaries import *
-import metadata as metadata
+from gslab_make.private.linkdirectives import *
+from gslab_make.private.preliminaries import *
+import gslab_make.private.metadata as metadata
 
 class LinksList(object):
 

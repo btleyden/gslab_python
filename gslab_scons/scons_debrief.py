@@ -35,7 +35,7 @@ def scons_debrief(args, cl_args_list = sys.argv):
 
 
 def state_of_repo(maxit, outfile='state_of_repo.log'):
-    with open(outfile, 'wb') as f:
+    with open(outfile, 'w') as f:
         f.write("WARNING: Information about .sconsign.dblite may be misleading\n" +
                 "as it can be edited after state_of_repo.log finishes running\n\n" +
                 misc.make_heading("GIT STATUS"))
@@ -43,11 +43,11 @@ def state_of_repo(maxit, outfile='state_of_repo.log'):
 
     # https://stackoverflow.com/questions/876239/how-can-i-redirect-and-append-both-stdout-and-stderr-to-a-file-with-bash
     os.system("git log -n 1 >> state_of_repo.log 2>&1")
-    with open(outfile, 'ab') as f:
+    with open(outfile, 'a') as f:
         f.write("\n\nFiles changed since last commit:\n\n\n")
     os.system("git diff --name-only >> state_of_repo.log 2>&1")
 
-    with open(outfile, 'ab') as f:
+    with open(outfile, 'a') as f:
         f.write('\n%s' % misc.make_heading("FILE STATUS"))
         for root, dirs, files in os.walk(".", followlinks=True):
             i = 1
@@ -107,29 +107,29 @@ def issue_size_warnings(look_in = ['source', 'raw', 'release'],
             # see if a file's size exceeds the given limit
             if size > limit_file_lfs:
                 size_in_MB = size / bytes_in_MB
-                print _red_and_bold("Warning:") + \
+                print(_red_and_bold("Warning:") + \
                       " the versioned file %s "  % file_name  + \
                       "(size: %.02f MB)\n\t"     % size_in_MB + \
-                      "is larger than %.02f MB." % file_MB_limit_lfs
-                print "Versioning files of this size is discouraged.\n"
+                      "is larger than %.02f MB." % file_MB_limit_lfs)
+                print("Versioning files of this size is discouraged.\n")
 
         # see if the directory size exceeds the given limit
         if total_size > limit_total_lfs:
             total_size_in_MB = total_size / bytes_in_MB
-            print _red_and_bold("Warning:") + \
+            print(_red_and_bold("Warning:") + \
                   " the total size of versioned files " + \
                   "in the directories %s\n\tis "      % str(look_in) + \
                   "%.02f MB, which exceeds "          % total_size_in_MB + \
-                  "our recommended limit of %f.02 MB" % total_MB_limit_lfs
-            print "Versioning this much content is discouraged.\n"
+                  "our recommended limit of %f.02 MB" % total_MB_limit_lfs)
+            print("Versioning this much content is discouraged.\n")
 
         # if there are large versioned files not tracked by git-lfs, warned the user and perform tracking if the user agrees 
         if new_add_list:
-            print _red_and_bold("Warning:") + \
+            print(_red_and_bold("Warning:") + \
             " the following files are versioned large files that " + \
-            "are not tracked by git-lfs (recommend using git-lfs to track them): " 
-            print '\n'.join(new_add_list)
-            decision = raw_input("Enter 'y' to automatically track these with git-lfs: ")
+            "are not tracked by git-lfs (recommend using git-lfs to track them): ")
+            print('\n'.join(new_add_list))
+            decision = input("Enter 'y' to automatically track these with git-lfs: ")
             if decision == 'y':
                 for file in new_add_list:
                     add_to_lfs(file, git_attrib_path)
@@ -140,23 +140,23 @@ def issue_size_warnings(look_in = ['source', 'raw', 'release'],
             size  = versioned[file_name]
             if size > limit_file:
                 size_in_MB = size / bytes_in_MB
-                print _red_and_bold("Warning:") + \
+                print(_red_and_bold("Warning:") + \
                       " the versioned file %s "  % file_name  + \
                       "(size: %.02f MB)\n\t"     % size_in_MB + \
-                      "is larger than %.02f MB." % file_MB_limit
-                print "Versioning files of this size is discouraged."
-                print "Consider using git-lfs for versioning large files.\n"
+                      "is larger than %.02f MB." % file_MB_limit)
+                print("Versioning files of this size is discouraged.")
+                print("Consider using git-lfs for versioning large files.\n")
 
         # see if the directory size exceeds the given limit
         if total_size > limit_total:
             total_size_in_MB = total_size / bytes_in_MB
-            print _red_and_bold("Warning:") + \
+            print(_red_and_bold("Warning:") + \
                   " the total size of versioned files " + \
                   "in the directories %s\n\tis "      % str(look_in) + \
                   "%.02f MB, which exceeds "          % total_size_in_MB + \
-                  "our recommended limit of %f.02 MB" % total_MB_limit
-            print "Versioning this much content is discouraged."
-            print "Consider using git-lfs for versioning large files.\n"
+                  "our recommended limit of %f.02 MB" % total_MB_limit)
+            print("Versioning this much content is discouraged.")
+            print("Consider using git-lfs for versioning large files.\n")
 
 
 def _red_and_bold(warning):
@@ -178,8 +178,9 @@ def list_ignored_files(look_in):
     '''
     # Produce a listing of files and directories ignored by git
     message = subprocess.check_output('git status --ignored', shell = True)
+    message = message.decode()
     message = message.split('\n')
-    message = map(lambda s: s.strip(), message)
+    message = list(map(lambda s: s.strip(), message))
 
     try:
         ignored_line = message.index('Ignored files:')

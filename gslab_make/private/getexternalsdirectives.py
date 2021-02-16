@@ -4,11 +4,11 @@ import os
 import re
 import shutil 
 import subprocess
-import urlparse
+from urllib import parse as urlparse
 
-import messages as messages
-import metadata as metadata
-from exceptionclasses import CustomError, CritError, SyntaxError, LogicError
+import gslab_make.private.messages as messages
+import gslab_make.private.metadata as metadata
+from gslab_make.private.exceptionclasses import CustomError, CritError, SyntaxError, LogicError
 
 
 class SystemDirective(object):

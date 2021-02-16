@@ -20,9 +20,9 @@ def start_log(mode, cl_args_list = sys.argv, log = 'sconstruct.log'):
         f.write(start_message)
 
     if misc.is_unix():
-        sys.stdout = os.popen('tee -a %s' % log, 'wb')
+        sys.stdout = os.popen('tee -a %s' % log, 'w')
     elif sys.platform == 'win32':
-        sys.stdout = open(log, 'ab')
+        sys.stdout = open(log, 'a')
 
     sys.stderr = sys.stdout 
 

@@ -43,7 +43,7 @@ class test_unzipFiles(unittest.TestCase):
         '''
         Test that an empty list is returned when there is no zip file in the input directory.
         '''
-        with open('./test_data/test.txt', 'wb') as f:
+        with open('./test_data/test.txt', 'w') as f:
             f.write('test')
 
         testcat.unzipFiles()
@@ -76,7 +76,7 @@ class test_unzipFiles(unittest.TestCase):
         '''
         # Set up
         inzip = zipfile.ZipFile('test_temp/test_zip.zip', 'w', zipfile.ZIP_DEFLATED, True)
-        with open('test_data/test_text.txt', 'wb') as f:
+        with open('test_data/test_text.txt', 'w') as f:
             f.write('test\ntest')
         inzip.write('test_data/test_text.txt')
         inzip.close()
@@ -110,7 +110,7 @@ class test_unzipFiles(unittest.TestCase):
         files = ['test1', 'test2']
         inzip = zipfile.ZipFile('test_temp/test_zip.zip', 'w', zipfile.ZIP_DEFLATED, True)
         for f in files:
-            with open('test_data/%s_text.txt' % f, 'wb') as fi:
+            with open('test_data/%s_text.txt' % f, 'w') as fi:
                 fi.write('%s\n%s' % (f, f))
             inzip.write('test_data/%s_text.txt' % f)
         inzip.close()
@@ -148,7 +148,7 @@ class test_unzipFiles(unittest.TestCase):
         inzip1 = zipfile.ZipFile('test_temp/test1_zip.zip', 'w', zipfile.ZIP_DEFLATED, True)
         inzip2 = zipfile.ZipFile('test_temp/test2_zip.zip', 'w', zipfile.ZIP_DEFLATED, True)
         for f in files:
-            with open('test_data/%s_text.txt' % f, 'wb') as fi:
+            with open('test_data/%s_text.txt' % f, 'w') as fi:
                 fi.write('%s\n%s' % (f, f))
             if f == 'test1':
                 inzip1.write('test_data/%s_text.txt' % f)

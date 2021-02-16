@@ -10,7 +10,7 @@ Please consult the docstrings of the gslab_scons builders belonging to
 this module for additonal information on their functionalities.
 '''
 import os
-import misc
+from . import misc
 from .log                      import start_log, end_log
 from .log_paths_dict           import log_paths_dict, record_dir
 from .scons_debrief            import scons_debrief

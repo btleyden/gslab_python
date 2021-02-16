@@ -34,7 +34,7 @@ class test_main(unittest.TestCase):
                 os.makedirs(path)
         count = 1
         for FILE in ['./test_data/file1.txt', './test_data/file2.txt']:
-            with open(FILE, 'wb') as f:
+            with open(FILE, 'w') as f:
                 f.write('THIS IS TEST FILE %s.\n' % (count))
             count = count + 1
 

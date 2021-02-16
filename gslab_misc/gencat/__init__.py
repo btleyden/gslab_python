@@ -7,4 +7,4 @@ concatenating text files. Please see this class's docstring for additional
 information on its structure and functionalities. 
 '''
 
-from gencat import gencat
+from .gencat import gencat

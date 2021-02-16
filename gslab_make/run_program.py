@@ -101,13 +101,11 @@ import os
 import shutil
 import fileinput
 
-import private.metadata as metadata
-import private.messages as messages
-from private.exceptionclasses import SyntaxError
-from private.runprogramdirective import (RunProgramDirective, 
+import gslab_make.private.metadata as metadata
+from gslab_make.private.runprogramdirective import (RunProgramDirective,
                                          RunCommandDirective, 
                                          RunRPackageDirective)
-from private.preliminaries import add_error_to_log
+from gslab_make.private.preliminaries import add_error_to_log
 
 
 def run_stata(**kwargs):
@@ -364,7 +362,7 @@ def run_lyx(**kwargs):
                     line = line.rstrip('\n') + ', handout\n'
                 elif comments and r'\begin_inset Note Note' in line:
                     line = line.replace('Note Note', 'Note Greyedout')
-                print line,
+                print(line)
         
         # Get executable
         executable = run.executable

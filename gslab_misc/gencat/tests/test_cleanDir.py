@@ -36,7 +36,7 @@ class test_cleanDir(unittest.TestCase):
         '''
         Test that files in directory are cleared.
         '''
-        with open('test_data/test_file', 'wb') as f:
+        with open('test_data/test_file', 'w') as f:
             f.write('test')
         testcat.cleanDir('./test_data')
         self.assertFalse(os.listdir('./test_data'))

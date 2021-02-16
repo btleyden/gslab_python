@@ -1,7 +1,7 @@
 import os
 import shutil
-
-from gslab_builder import GSLabBuilder
+import subprocess
+from .gslab_builder import GSLabBuilder
 
 
 def build_lyx(target, source, env):

@@ -5,7 +5,7 @@ import argparse
 import types
 import re
 import traceback
-import tablefill_info
+from . import tablefill_info
 from decimal import Decimal, ROUND_HALF_UP
 
 
@@ -16,12 +16,12 @@ def tablefill(**kwargs):
         lyx_text = insert_tables(args, tables)
         write_to_lyx(args, lyx_text)
         exitmessage = args['template'] + ' filled successfully by tablefill'
-        print exitmessage
+        print(exitmessage)
         return exitmessage    
     except:
-        print 'Error Found'
+        print('Error Found')
         exitmessage = traceback.format_exc()
-        print exitmessage
+        print(exitmessage)
         return exitmessage
 
 # Set tablefill's docstring as the text in "tablefill_info.py"
@@ -49,7 +49,7 @@ def parse_tables(args):
 
 def read_data(input):
     data = []
-    if isinstance(input, types.StringTypes):
+    if isinstance(input, str):
         input = [input]
     for file in input:
         data += open(file, 'rU').readlines()
@@ -72,7 +72,7 @@ def parse_data(data):
         for n in range( len(tables[table_tag]) ):
             clean_entry = tables[table_tag][n].strip()
             tables[table_tag][n] = clean_entry
-        tables[table_tag] = filter(lambda a: a != '.' and a != '', tables[table_tag])
+        tables[table_tag] = list(filter(lambda a: a != '.' and a != '', tables[table_tag]))
         
     return tables    
     
@@ -177,7 +177,7 @@ def insert_commas(entry):
   
 
 def write_to_lyx(args, lyx_text):    
-    outfile = open(args['output'], 'wb')
+    outfile = open(args['output'], 'w')
     outfile.write( ''.join(lyx_text) )
     outfile.close()
     

@@ -2,10 +2,10 @@
 
 import os
 
-from dir_mod import remove_dir
-from private.linkslist import LinksList
-from private.preliminaries import start_logging, end_logging
-import private.metadata as metadata
+from gslab_make.dir_mod import remove_dir
+from gslab_make.private.linkslist import LinksList
+from gslab_make.private.preliminaries import start_logging, end_logging
+import gslab_make.private.metadata as metadata
 
 def make_links (links_files,
                 links_dir = '@DEFAULTVALUE@',
@@ -75,4 +75,4 @@ def make_links (links_files,
         end_logging(LOGFILE, makelog, 'make_links.py')
     
     except Exception as errmsg:
-        print "Error with make_links: \n", errmsg                      
+        print("Error with make_links: \n", errmsg)

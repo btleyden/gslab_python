@@ -1,11 +1,10 @@
 #! /usr/bin/env python
 
 import os
-import private.preliminaries as prelim
-import private.metadata as metadata
-import private.messages as messages
+import gslab_make.private.preliminaries as prelim
+import gslab_make.private.metadata as metadata
 
-from private.getexternalsdirectives import SystemDirective
+from gslab_make.private.getexternalsdirectives import SystemDirective
 
 def get_externals(externals_file,
                   external_dir = '@DEFAULTVALUE@',
@@ -95,4 +94,4 @@ def get_externals(externals_file,
         prelim.end_logging(LOGFILE, makelog, 'get_externals.py')
 
     except Exception as errmsg:
-        print "Error with get_external: \n", errmsg
+        print("Error with get_external: \n", errmsg)

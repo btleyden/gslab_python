@@ -3,7 +3,7 @@ import sys
 import scandir
 import pymmh3 as mmh3
 
-import misc
+from . import misc
 
 def log_paths_dict(d, record_key = 'input', nest_depth = 1, sep = ':', 
                   cl_args_list = sys.argv):
@@ -152,7 +152,7 @@ def write_log(name, files_info, outpath):
         out_files_info = '\n'.join(out_files_info)
     else:
         out_files_info = ''
-    with open(outpath, 'ab') as f:
+    with open(outpath, 'a') as f:
         f.write(out_name)
         f.write(out_files_info)
         f.write('\n\n')

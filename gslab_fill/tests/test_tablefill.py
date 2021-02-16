@@ -101,7 +101,7 @@ class testTablefill(unittest.TestCase):
                                              '../../gslab_fill/tests/input/tables_appendix_two.txt', 
                                   template = '../../gslab_fill/tests/input/tablefill_template_breaks.%s' % ext, 
                                   output   = './build/tablefill_template_filled.%s' % ext)
-            self.assertIn('IOError', error)
+            self.assertIn('FileNotFoundError', error)
 
         # non-existent input 2
         for ext in ['lyx', 'tex']:
@@ -110,7 +110,7 @@ class testTablefill(unittest.TestCase):
                                              '../../gslab_fill/tests/input/fake_file.txt', 
                                   template = '../../gslab_fill/tests/input/tablefill_template_breaks.%s' % ext, 
                                   output   = './build/tablefill_template_filled.%s' % ext)
-            self.assertIn('IOError', error)
+            self.assertIn('FileNotFoundError', error)
 
     def testArgumentOrder(self):
         for ext in ['lyx', 'tex']:

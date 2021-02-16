@@ -2,8 +2,8 @@ import sys
 import subprocess
 import pkg_resources
 
-import misc
-from _exception_classes import PrerequisiteError
+from . import misc
+from ._exception_classes import PrerequisiteError
 
 
 def check_prereq(prereq, manual_execs = {}, gslab_vers = None):
@@ -21,8 +21,8 @@ def check_prereq(prereq, manual_execs = {}, gslab_vers = None):
             message = 'Cannot find executable for %s in PATH.' % prereq_clean
             raise PrerequisiteError(message)
     elif prereq_clean == 'python':
-        if sys.version_info[0] != 2:
-            raise PrerequisiteError('Please use Python 2')
+        if sys.version_info[0] != 3:
+            raise PrerequisiteError('Please use Python 3')
     elif prereq_clean == 'gslab_python':
         required_version  = process_gslab_version(gslab_vers)
         installed_version = pkg_resources.get_distribution('gslab_tools').version

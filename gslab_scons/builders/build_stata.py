@@ -1,9 +1,9 @@
 import os
 import shutil
 import sys
-
+import subprocess
 import gslab_scons.misc as misc
-from gslab_builder import GSLabBuilder
+from .gslab_builder import GSLabBuilder
 
 def build_stata(target, source, env):
     '''

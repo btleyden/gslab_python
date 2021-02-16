@@ -4,7 +4,7 @@ import mock
 import requests
 import shutil
 import subprocess
-import _test_helpers as helpers
+import gslab_scons.tests._test_helpers as helpers
 
 def make_r_side_effect(recognized = True):
     '''
@@ -36,9 +36,9 @@ def make_r_side_effect(recognized = True):
             log    = '%s.log' % re.sub('\.R', '', source)
     
         if executable == 'Rscript' and log and append == '2>&1':
-            with open(log.replace('>', '').strip(), 'wb') as log_file:
+            with open(log.replace('>', '').strip(), 'w') as log_file:
                 log_file.write('Test log\n')
-            with open('./test_output.txt', 'wb') as target:
+            with open('./test_output.txt', 'w') as target:
                 target.write('Test target')
 
     return side_effect
@@ -51,9 +51,9 @@ def python_side_effect(*args, **kwargs):
 
     if match.group('log'):
         log_path = re.sub('(\s|>)', '', match.group('log'))
-        with open(log_path, 'wb') as log_file:
+        with open(log_path, 'w') as log_file:
             log_file.write('Test log')
-        with open('./test_output.txt', 'wb') as target:
+        with open('./test_output.txt', 'w') as target:
             target.write('Test target')
 
 
@@ -77,9 +77,9 @@ def make_matlab_side_effect(recognized = True):
     
         if log_match:
             log_path = log_match.group('log')
-            with open(log_path, 'wb') as log_file:
+            with open(log_path, 'w') as log_file:
                 log_file.write('Test log')
-            with open('./test_output.txt', 'wb') as target:
+            with open('./test_output.txt', 'w') as target:
                 target.write('Test target')
     
         return None
@@ -89,7 +89,7 @@ def make_matlab_side_effect(recognized = True):
 
 def matlab_copy_effect(*args, **kwargs):
     '''Mock copy so that it creates a file with the destination's path'''
-    open(args[1], 'wb').write('test')
+    open(args[1], 'w').write('test')
 
 
 def make_stata_side_effect(recognized = True):
@@ -108,9 +108,9 @@ def make_stata_side_effect(recognized = True):
             stata_log   = os.path.basename(script_name).replace('.do', '.log')
             
             # Write a log
-            with open(stata_log, 'wb') as logfile:
+            with open(stata_log, 'w') as logfile:
                 logfile.write('Test Stata log.\n')
-            with open('./test_output.txt', 'wb') as target:
+            with open('./test_output.txt', 'w') as target:
                 target.write('Test target')
 
         else:
@@ -152,7 +152,7 @@ def lyx_side_effect(*args, **kwargs):
     # As long as output is redirected, create a log
     if log_redirect:
         log_path = re.sub('>\s*', '', log_redirect)
-        with open(log_path, 'wb') as log_file:
+        with open(log_path, 'w') as log_file:
             log_file.write('Test log\n')
 
     # If LyX is the executable, the options are correctly specified,
@@ -169,7 +169,7 @@ def lyx_side_effect(*args, **kwargs):
     if is_lyx and option_type == '-e' and option_setting == 'pdf2' \
               and source_exists:
         out_path = re.sub('lyx$', 'pdf', source, flags = re.I)
-        with open(out_path, 'wb') as out_file:
+        with open(out_path, 'w') as out_file:
             out_file.write('Mock .pdf output')
 
 def latex_side_effect(*args, **kwargs):
@@ -198,7 +198,7 @@ def latex_side_effect(*args, **kwargs):
     # As long as output is redirected, create a log
     if log_redirect:
         log_path = re.sub('>\s*', '', log_redirect)
-        with open(log_path, 'wb') as log_file:
+        with open(log_path, 'w') as log_file:
             log_file.write('Test log\n')
 
     # If pdflatex is the executable, the options are correctly specified,
@@ -213,9 +213,9 @@ def latex_side_effect(*args, **kwargs):
                      map(os.path.abspath, existing_files)
 
     if is_pdflatex and source_exists and option1_type == '-interaction' and option2_type == '-jobname':
-        with open('%s.pdf' % target_file, 'wb') as out_file:
+        with open('%s.pdf' % target_file, 'w') as out_file:
             out_file.write('Mock .pdf output')
-        with open('%s.log' % target_file, 'wb') as out_file:
+        with open('%s.log' % target_file, 'w') as out_file:
             out_file.write('Mock .log output')
 
 def make_call_side_effect(text):

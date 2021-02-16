@@ -7,32 +7,32 @@ import re
 import traceback
 import shutil
 
-import messages as messages
-import metadata as metadata
+import gslab_make.private.messages as messages
+import gslab_make.private.metadata as metadata
 
-from exceptionclasses import CustomError, CritError
+from gslab_make.private.exceptionclasses import CustomError, CritError
 
 #== Logging ===============================================
 def start_logging(log, logtype):
     try:
-        LOGFILE = open(log,'wb') 
+        LOGFILE = open(log,'w')
     except:
         raise CustomError.crit(messages.crit_error_log % log)
     time_begin = datetime.datetime.now().replace(microsecond=0)
     orig_stderr = sys.stderr
     sys.stderr = LOGFILE
     working_dir = os.getcwd()
-    print >> LOGFILE, messages.note_logstart % logtype, time_begin, working_dir
+    print(messages.note_logstart % logtype, time_begin, working_dir, file=LOGFILE)
     return LOGFILE
 
 def end_logging(LOGFILE, makelog, logtype):
     time_end = datetime.datetime.now().replace(microsecond=0)
-    print >> LOGFILE, messages.note_logend % logtype,time_end
+    print(messages.note_logend % logtype,time_end, file=LOGFILE)
     LOGFILE.close()
     if not makelog: return
     if not (metadata.makelog_started and os.path.isfile(makelog)):
         raise CritError(messages.crit_error_nomakelog % makelog)
-    MAKE_LOGFILE = open(makelog, 'ab')
+    MAKE_LOGFILE = open(makelog, 'a')
     MAKE_LOGFILE.write( open(LOGFILE.name, 'rU').read() )
     MAKE_LOGFILE.close()
     os.remove(LOGFILE.name)
@@ -57,9 +57,9 @@ def input_to_array(filename):
     
 #== Print error ===========================================
 def print_error(LOGFILE):
-    print '\n'
-    print >> LOGFILE, '\n'
-    print 'Error Found'
+    print('\n')
+    print('\n', file=LOGFILE)
+    print('Error Found')
     traceback.print_exc(file = LOGFILE)        
     traceback.print_exc(file = sys.stdout)
     
@@ -67,7 +67,7 @@ def add_error_to_log(makelog):
     if not makelog: return
     if not (metadata.makelog_started and os.path.isfile(makelog)):
         raise CritError(messages.crit_error_nomakelog % makelog)
-    LOGFILE = open(makelog, 'ab')
+    LOGFILE = open(makelog, 'a')
     print_error(LOGFILE)
     LOGFILE.close()
 
@@ -151,11 +151,10 @@ def externals_preliminaries(makelog, externals_file, LOGFILE):
     if makelog == '@DEFAULTVALUE@':
         makelog = metadata.settings['makelog_file']
     if externals_file!='externals.txt':
-        print >> LOGFILE, messages.note_extfilename        
+        print(messages.note_extfilename, file=LOGFILE)
     externals = input_to_array(externals_file)
 
     # Prepare last rev/dir variables
     last_dir = ''
     last_rev = ''    
     return([makelog, externals, last_dir, last_rev])
-        

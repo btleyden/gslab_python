@@ -7,7 +7,7 @@ import yaml
 import getpass
 import fnmatch
 # Import gslab_scons modules
-import _exception_classes
+from . import _exception_classes
 
 def make_heading(s):
     '''
@@ -133,7 +133,7 @@ def load_yaml_value(path, key):
         else:
             return yaml_contents[key]
     except:
-        with open(path, 'ab') as f:
+        with open(path, 'a') as f:
             if key == "github_token":
                 val = getpass.getpass(prompt=(prompt % key))
             else:
@@ -179,7 +179,7 @@ def get_executable(language_name, manual_executables = {}):
         'stata': '',
         'matlab': 'matlab',
         'lyx': 'lyx',
-        'latex': 'pdflatex',
+        'latex': 'latexmk',
         'tablefill': '',
         'anything builder': ''
     }
@@ -232,7 +232,7 @@ def finder(rel_parent_dir, pattern, excluded_dirs=[]):
 
     try:
         out_paths = subprocess.check_output(
-            command, shell=True).replace('\r\n', '\n')
+            command, shell=True).decode().replace('\r\n', '\n')
         out_paths = out_paths.split('\n')
         # Strip paths and keep non-empty
         out_paths = filter(bool, map(str.strip, out_paths))
@@ -249,14 +249,14 @@ def add_two_dict_keys(d = {}, common_key = '', key1 = 'global', key2 = 'user'):
     Overwrites repeated values at key1 by key2.
     '''
     try:
-        items1 = d[key1][common_key].items()
+        items1 = d[key1][common_key]
     except (KeyError, TypeError):
-        items1 = []
+        items1 = {}
     try:
-        items2 = d[key2][common_key].items()
+        items2 = d[key2][common_key]
     except (KeyError, TypeError):
-        items2 = []
-    items = dict(items1 + items2)
+        items2 = {}
+    items = {**items1, **items2}
     if not items:
         message = 'Inappropriate input values: `d` must be a dictionary, and ' \
                   'at least one of `d[%s][%s]` and `d[%s][%s]` ' \
@@ -276,7 +276,7 @@ def flatten_dict(d, parent_key = '', sep = ':',
     items = []
     for key, val in sorted(d.items()):
         # Create name of new key
-        if parent_key is not '':
+        if parent_key != '':
             prefix = parent_key + sep
         else:
             prefix = ''

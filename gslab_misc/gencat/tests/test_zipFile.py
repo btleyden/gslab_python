@@ -29,7 +29,7 @@ class test_zipFiles(unittest.TestCase):
                 shutil.rmtree(path, ignore_errors = True)
                 os.makedirs(path)
         for FILE in ['./test_data/file1.txt', './test_data/file2.txt']:
-            with open(FILE, 'wb') as f:
+            with open(FILE, 'w') as f:
                 f.write('''THIS IS A TEST FILE.\n''')
 
     def test_oneFile(self):

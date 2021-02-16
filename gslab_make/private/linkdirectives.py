@@ -4,9 +4,9 @@ import os
 import re
 import subprocess
 
-import messages as messages
-import metadata as metadata
-from exceptionclasses import SyntaxError, LogicError
+import gslab_make.private.messages as messages
+import gslab_make.private.metadata as metadata
+from gslab_make.private.exceptionclasses import SyntaxError, LogicError
 
 class LinkDirectives(object):
 

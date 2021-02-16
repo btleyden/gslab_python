@@ -4,20 +4,17 @@ import sys
 import os
 import shutil
 import mock
-import subprocess
-import re
+
 # Import gslab_scons testing helper modules
-import _test_helpers as helpers
-import _side_effects as fx
+import gslab_scons.tests._test_helpers as helpers
+import gslab_scons.tests._side_effects as fx
 
 # Ensure that Python can find and load the GSLab libraries
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append('../..')
 
 import gslab_scons as gs
-from gslab_scons._exception_classes import ExecCallError, BadExtensionError
-from gslab_make  import get_externals
-from gslab_make.tests import nostderrout
+from gslab_scons._exception_classes import ExecCallError
 
 # Define path to the builder for use in patching
 path = 'gslab_scons.builders.build_stata'

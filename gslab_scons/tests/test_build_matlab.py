@@ -5,8 +5,8 @@ import shutil
 import mock
 import re
 # Import gslab_scons testing helper modules
-import _test_helpers as helpers
-import _side_effects as fx
+import gslab_scons.tests._test_helpers as helpers
+import gslab_scons.tests._side_effects as fx
 
 sys.path.append('../..')
 import gslab_scons as gs

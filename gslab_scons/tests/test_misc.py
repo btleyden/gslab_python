@@ -219,9 +219,9 @@ class TestMisc(unittest.TestCase):
         file extensions as intended. The function should return None in cases 
         where the extension is correctly specified and raise an error otherwise.
         '''
-    	self.assertEqual(misc.check_code_extension('test.do',  '.do'),  None)
-    	self.assertEqual(misc.check_code_extension('test.r',   '.r'),   None)
-    	self.assertEqual(misc.check_code_extension('test.lyx', '.lyx'), None)
+        self.assertEqual(misc.check_code_extension('test.do',  '.do'),  None)
+        self.assertEqual(misc.check_code_extension('test.r',   '.r'),   None)
+        self.assertEqual(misc.check_code_extension('test.lyx', '.lyx'), None)
         self.assertEqual(misc.check_code_extension('test.py',  '.py'),  None)
         self.assertEqual(misc.check_code_extension('test.m',   '.m'),   None)
         self.assertEqual(misc.check_code_extension('test.M',   '.M'),   None)
@@ -250,7 +250,7 @@ class TestMisc(unittest.TestCase):
         # Test maxit functionality
         os.mkdir('state_of_repo')
         for i in range(1, 20):
-            with open('state_of_repo/test_%s.txt' % i, 'wb') as f:
+            with open('state_of_repo/test_%s.txt' % i, 'w') as f:
                 f.write('Test')
         misc.state_of_repo(maxit)
         logfile = open('state_of_repo.log', 'rU').read()
@@ -295,7 +295,7 @@ class TestMisc(unittest.TestCase):
         def make_yaml(string):
             if os.path.isfile(yaml):
                 os.remove(yaml)  
-            with open(yaml, 'wb') as f:
+            with open(yaml, 'w') as f:
                 f.write('%s\n' % string)
 
         # Test Good

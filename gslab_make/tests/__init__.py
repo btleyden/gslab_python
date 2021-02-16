@@ -8,4 +8,4 @@ from `gslab_make/tests/`. The latter command stores the test
 results in `gslab_make/tests/log/make.log`.
 '''
 
-from nostderrout import nostderrout
+from gslab_make.tests.nostderrout import nostderrout

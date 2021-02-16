@@ -6,8 +6,8 @@ import shutil
 import mock
 import re
 # Import gslab_scons testing helper modules
-import _test_helpers as helpers
-import _side_effects as fx
+import gslab_scons.tests._test_helpers as helpers
+import gslab_scons.tests._side_effects as fx
 
 # Ensure that Python can find and load the GSLab libraries
 os.chdir(os.path.dirname(os.path.realpath(__file__)))

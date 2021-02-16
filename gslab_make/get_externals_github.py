@@ -2,10 +2,9 @@
 
 import os
 import getpass
-import private.preliminaries as prelim
-import private.metadata as metadata
-import private.messages as messages
-from private.getexternalsdirectives import SystemDirective
+import gslab_make.private.preliminaries as prelim
+import gslab_make.private.metadata as metadata
+from gslab_make.private.getexternalsdirectives import SystemDirective
 
 
 def get_externals_github(externals_file, external_dir = '@DEFAULTVALUE@',
@@ -76,5 +75,5 @@ def get_externals_github(externals_file, external_dir = '@DEFAULTVALUE@',
         prelim.end_logging(LOGFILE, makelog, 'get_externals_github.py')       
     
     except Exception as errmsg:
-        print "Error with get_externals_github: \n", errmsg
+        print("Error with get_externals_github: \n", errmsg)
         

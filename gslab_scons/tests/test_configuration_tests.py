@@ -2,18 +2,15 @@ import unittest
 import sys
 import os
 import re
-import shutil
 import mock
-import datetime
 import subprocess
 
 # Ensure that Python can find and load the GSLab libraries
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 sys.path.append('../..')
 
-import gslab_scons.configuration_tests as config_tests
+import gslab_scons.tests.test_configuration_tests as config_tests
 import gslab_scons._exception_classes as ex_classes
-from gslab_make.tests import nostderrout
 
 path = 'gslab_scons.configuration_tests'
 
@@ -266,7 +263,7 @@ class TestConfigurationTests(unittest.TestCase):
             if not re.search("statamp", command):
                 raise subprocess.CalledProcessError(1, args[0])  
 
-            with open('stata.log', 'wb') as f:
+            with open('stata.log', 'w') as f:
                 if not re.search('yaml', args[0]):
                     package = args[0].split("which ")[1]
                     f.write("command %s not found" % package)

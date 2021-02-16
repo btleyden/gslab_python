@@ -2,11 +2,10 @@
 
 import os
 import re
-import datetime
-import private.metadata as metadata
+import gslab_make.private.metadata as metadata
 
-from make_log import make_stats_log, make_heads_log
-from private.linkslist import LinksList
+from gslab_make.make_log import make_stats_log, make_heads_log
+from gslab_make.private.linkslist import LinksList
 
 
 def make_link_logs (links_files,
@@ -99,10 +98,10 @@ def make_link_orig_log (link_logs_dir, link_orig_file, links_dict):
     if not os.path.isdir(os.path.dirname(link_orig_path)):
         os.makedirs(os.path.dirname(link_orig_path))
     ORIGFILE = open(link_orig_path, 'w+')
-    print >> ORIGFILE, header  
+    print(header, file=ORIGFILE)
 
     links_dict_it = iter(sorted(links_dict.iteritems()))
     for i in range(num_links):
-        print >> ORIGFILE, "%s\t%s" % links_dict_it.next()
+        print("%s\t%s" % links_dict_it.next(), file=ORIGFILE)
         
       

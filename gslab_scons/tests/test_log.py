@@ -3,10 +3,9 @@ import sys
 import os
 import re
 import mock
-import time
 import shutil
 # Import gslab_scons testing helpers
-import _test_helpers as helpers
+import gslab_scons.tests._test_helpers as helpers
 
 # Ensure that Python can find and load the GSLab libraries
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
@@ -41,7 +40,7 @@ class TestLog(unittest.TestCase):
         test = "Test message"
         # Call start_log(), which redirects standard output to a log
         gs.start_log(mode = 'develop', vers = '')
-        print test
+        print(test)
         sys.stdout.close()
 
         # Restore the initial standard output
@@ -64,9 +63,9 @@ class TestLog(unittest.TestCase):
         on Unix machines.
         '''    
         gs.start_log(mode = 'develop', vers = '')
-        mock_popen.assert_called_with('tee -a sconstruct.log', 'wb')
+        mock_popen.assert_called_with('tee -a sconstruct.log', 'w')
         gs.start_log(mode = 'develop', vers = '', log = 'test_log.txt')
-        mock_popen.assert_called_with('tee -a test_log.txt', 'wb')       
+        mock_popen.assert_called_with('tee -a test_log.txt', 'w')
 
     # Set the platform to Windows
     @helpers.platform_patch('win32', path)
@@ -79,7 +78,7 @@ class TestLog(unittest.TestCase):
         test = "Test message"
 
         gs.start_log(mode = 'develop', vers = '')
-        print test
+        print(test)
         sys.stdout.close()
         sys.stdout = initial_stdout
 
@@ -98,9 +97,9 @@ class TestLog(unittest.TestCase):
         on Windows machines.
         '''
         gs.start_log(mode = 'develop', vers = '')
-        mock_open.assert_called_with('sconstruct.log', 'ab')
+        mock_open.assert_called_with('sconstruct.log', 'a')
         gs.start_log(mode = 'develop', vers = '', log = 'test_log.txt')
-        mock_open.assert_called_with('test_log.txt', 'ab')       
+        mock_open.assert_called_with('test_log.txt', 'a')
 
         mock_popen.assert_not_called()
 
@@ -164,9 +163,9 @@ class TestLog(unittest.TestCase):
         '''Test that log_timestamp() correctly adds start/end times to a log'''
         # Write the test log file and use log_timestamp() to add 
         # stand-in starting and ending time messages.
-        with open('test.txt', 'wb') as f:
+        with open('test.txt', 'w') as f:
             f.write('TEST CONTENT')
-    	gs.log_timestamp('test_time_start', 'test_time_end', 'test.txt')
+        gs.log_timestamp('test_time_start', 'test_time_end', 'test.txt')
         
         # Read the test log file and ensure log_timestamp() worked
         # as intended.
