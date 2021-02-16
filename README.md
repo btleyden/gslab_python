@@ -12,7 +12,7 @@ Information about each of these packages is available in its internal documentat
 
 Requirements
 ------------
-- Python 2.7 
+- Python >= 3.8
 - `setuptools` ([installation instructions](https://packaging.python.org/installing/))
 - `mock` (> 2.0.0) and `coverage` in order to run the unit tests 
 
