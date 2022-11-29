@@ -1,6 +1,6 @@
 import os
 import sys
-import scandir
+from os import scandir
 import pymmh3 as mmh3
 
 from . import misc
@@ -114,7 +114,7 @@ def scan_dir(dir_to_scan, files_info, inpath, include_checksum, file_limit,
     Collect names of all subdirs and all information on files.
     '''
     subdirs = []
-    entries = scandir.scandir(dir_to_scan)
+    entries = scandir(dir_to_scan)
     for entry in entries:
         if entry.is_dir(follow_symlinks = False):
             if '.git' in entry.path or '.svn' in entry.path:
