@@ -50,7 +50,7 @@ class test_zipFiles(unittest.TestCase):
         with zipfile.ZipFile('./test_out/zip1.zip', 'r') as zf:
             zf.extractall('./test_out/')
         
-        with open('./test_out/zip1/concat1.txt', 'rU') as f:
+        with open('./test_out/zip1/concat1.txt', 'r') as f:
             text = f.read()
         
         self.assertEqual(text, '\nNEWFILE\nFILENAME: file1.txt\n\nTHIS IS A TEST FILE.\n')
@@ -73,7 +73,7 @@ class test_zipFiles(unittest.TestCase):
         with zipfile.ZipFile('./test_out/zip1.zip', 'r') as zf:
             zf.extractall('./test_out/')
 
-        with open('./test_out/zip1/concat1.txt', 'rU') as f:
+        with open('./test_out/zip1/concat1.txt', 'r') as f:
             text = f.read()
         
         test_text = '\nNEWFILE\nFILENAME: file1.txt\n\nTHIS IS A TEST FILE.' + \
@@ -104,9 +104,9 @@ class test_zipFiles(unittest.TestCase):
         with zipfile.ZipFile('./test_out/zip2.zip', 'r') as zf:
             zf.extractall('./test_out/')
         
-        with open('./test_out/zip1/concat1.txt', 'rU') as f:
+        with open('./test_out/zip1/concat1.txt', 'r') as f:
             text1 = f.read()
-        with open('./test_out/zip2/concat2.txt', 'rU') as f:
+        with open('./test_out/zip2/concat2.txt', 'r') as f:
             text2 = f.read()
         
         self.assertEqual(text1, '\nNEWFILE\nFILENAME: file1.txt\n\nTHIS IS A TEST FILE.\n')
@@ -131,9 +131,9 @@ class test_zipFiles(unittest.TestCase):
         with zipfile.ZipFile('./test_out/zip1.zip', 'r') as zf:
             zf.extractall('./test_out/')
         
-        with open('./test_out/zip1/concat1.txt', 'rU') as f:
+        with open('./test_out/zip1/concat1.txt', 'r') as f:
             text1 = f.read()
-        with open('./test_out/zip1/concat2.txt', 'rU') as f:
+        with open('./test_out/zip1/concat2.txt', 'r') as f:
             text2 = f.read()
         
         self.assertEqual(text1, '\nNEWFILE\nFILENAME: file1.txt\n\nTHIS IS A TEST FILE.\n')

@@ -84,7 +84,7 @@ class LatexBuilder(GSLabBuilder):
             log_path = os.path.relpath(path=self.log_file, start=os.path.dirname(self.source_file))
         else:
             log_path = self.log_file
-        with open(log_path, mode = 'rU') as f:
+        with open(log_path, mode = 'r') as f:
             content = f.read()
             f.seek(0, 0)
             builder_log_msg = '*** Builder log created: {%s}\n' \

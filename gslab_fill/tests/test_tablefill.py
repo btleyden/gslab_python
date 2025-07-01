@@ -30,8 +30,8 @@ class testTablefill(unittest.TestCase):
                                     template = '../../gslab_fill/tests/input/tablefill_template.%s' % ext, 
                                     output   = './build/tablefill_template_filled.%s' % ext)
             self.assertIn('filled successfully', message)
-            tag_data = open('../../gslab_fill/tests/input/tablefill_template.%s' % ext, 'rU').readlines()
-            filled_data = open('./build/tablefill_template_filled.%s' % ext, 'rU').readlines()
+            tag_data = open('../../gslab_fill/tests/input/tablefill_template.%s' % ext, 'r').readlines()
+            filled_data = open('./build/tablefill_template_filled.%s' % ext, 'r').readlines()
             self.assertEqual(len(tag_data), len(filled_data))
             for n in range(len(tag_data)):
                 if ext == 'tex':
@@ -43,36 +43,36 @@ class testTablefill(unittest.TestCase):
         tag_line    = tag_line.split('&')
         filled_line = filled_line.split('&')
         for col in range(len(tag_line)):
-            if re.match('^.*#\d+#', tag_line[col]) or re.match('^.*#\d+,#', tag_line[col]):
+            if re.match(r'^.*#\d+#', tag_line[col]) or re.match(r'^.*#\d+,#', tag_line[col]):
                 entry_tag = re.split('#', tag_line[col])[1]
                 decimal_places = int(entry_tag.replace(',', ''))
                 if decimal_places > 0:
-                    self.assertTrue(re.search('\.', filled_line[col]))
-                    decimal_part = re.split('\.', filled_line[col])[1]
+                    self.assertTrue(re.search(r'\.', filled_line[col]))
+                    decimal_part = re.split(r'\.', filled_line[col])[1]
                     non_decimal = re.compile(r'[^\d.]+')
                     decimal_part = non_decimal.sub('', decimal_part)
                     self.assertEqual(len(decimal_part), decimal_places)
                 else:
-                    self.assertFalse(re.search('\.', filled_line[col]))
-                if re.match('^.*#\d+,#', tag_line[col]):
-                    integer_part = re.split('\.', filled_line[col])[0]
+                    self.assertFalse(re.search(r'\.', filled_line[col]))
+                if re.match(r'^.*#\d+,#', tag_line[col]):
+                    integer_part = re.split(r'\.', filled_line[col])[0]
                     if len(integer_part) > 3:
                         self.assertEqual(integer_part[-4], ',')
 
     def tag_compare_lyx(self, tag_line, filled_line):
-        if re.match('^.*#\d+#', tag_line) or re.match('^.*#\d+,#', tag_line):
+        if re.match(r'^.*#\d+#', tag_line) or re.match(r'^.*#\d+,#', tag_line):
             entry_tag = re.split('#', tag_line)[1]
             decimal_places = int(entry_tag.replace(',', ''))
             if decimal_places > 0:
-                self.assertTrue(re.search('\.', filled_line))
-                decimal_part = re.split('\.', filled_line)[1]
+                self.assertTrue(re.search(r'\.', filled_line))
+                decimal_part = re.split(r'\.', filled_line)[1]
                 non_decimal = re.compile(r'[^\d.]+')
                 decimal_part = non_decimal.sub('', decimal_part)
                 self.assertEqual(len(decimal_part), decimal_places)
             else:
-                self.assertFalse(re.search('\.', filled_line))
-            if re.match('^.*#\d+,#', tag_line):
-                integer_part = re.split('\.', filled_line)[0]
+                self.assertFalse(re.search(r'\.', filled_line))
+            if re.match(r'^.*#\d+,#', tag_line):
+                integer_part = re.split(r'\.', filled_line)[0]
                 if len(integer_part) > 3:
                     self.assertEqual(integer_part[-4], ',')
 
@@ -121,7 +121,7 @@ class testTablefill(unittest.TestCase):
                                     template = '../../gslab_fill/tests/input/tablefill_template.%s' % ext)
             self.assertIn('filled successfully', message)
 
-            with open('./build/tablefill_template_filled.%s' % ext, 'rU') as filled_file:
+            with open('./build/tablefill_template_filled.%s' % ext, 'r') as filled_file:
                 filled_data_args1 = filled_file.readlines()
 
             with nostderrout():
@@ -131,7 +131,7 @@ class testTablefill(unittest.TestCase):
                                                '../../gslab_fill/tests/input/tables_appendix_two.txt')
             self.assertIn('filled successfully', message)
 
-            with open('./build/tablefill_template_filled.%s' % ext, 'rU') as filled_file:
+            with open('./build/tablefill_template_filled.%s' % ext, 'r') as filled_file:
                 filled_data_args2 = filled_file.readlines()
 
             self.assertEqual(filled_data_args1, filled_data_args2)

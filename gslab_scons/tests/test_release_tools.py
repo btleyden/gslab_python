@@ -1,7 +1,7 @@
 import unittest
 import sys
 import os
-import mock
+from unittest import mock
 # Import module containing gslab_scons testing side effects
 import gslab_scons.tests._side_effects as fx
 

@@ -1,6 +1,6 @@
 import sys
 import subprocess
-import pkg_resources
+from importlib.metadata import version
 
 from . import misc
 from ._exception_classes import PrerequisiteError
@@ -25,7 +25,7 @@ def check_prereq(prereq, manual_execs = {}, gslab_vers = None):
             raise PrerequisiteError('Please use Python 3')
     elif prereq_clean == 'gslab_python':
         required_version  = process_gslab_version(gslab_vers)
-        installed_version = pkg_resources.get_distribution('gslab_tools').version
+        installed_version = version('gslab_tools')
         installed_version = process_gslab_version(installed_version)
         if check_gslab_version(required_version, installed_version):
             message = 'Your version of gslab_python (%s) is outdated. ' \

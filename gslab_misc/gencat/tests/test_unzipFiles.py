@@ -92,7 +92,7 @@ class test_unzipFiles(unittest.TestCase):
         self.assertTrue(os.path.isfile('test_temp/test_data/test_text.txt'))
 
         # Test Content
-        with open('test_temp/test_data/test_text.txt', 'rU') as f:
+        with open('test_temp/test_data/test_text.txt', 'r') as f:
             lines = f.readlines()
 
         count = 0
@@ -129,7 +129,7 @@ class test_unzipFiles(unittest.TestCase):
 
         # Test Content
         for f in files:
-            with open('test_temp/test_data/%s_text.txt' % f, 'rU') as fi:
+            with open('test_temp/test_data/%s_text.txt' % f, 'r') as fi:
                 lines = fi.readlines()
             
             count = 0
@@ -174,7 +174,7 @@ class test_unzipFiles(unittest.TestCase):
 
         # Test Content
         for f in files:
-            with open('test_temp/test_data/%s_text.txt' % f, 'rU') as fi:
+            with open('test_temp/test_data/%s_text.txt' % f, 'r') as fi:
                 lines = fi.readlines()
             
             count = 0

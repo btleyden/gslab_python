@@ -143,7 +143,7 @@ class gencat(object):
                     concat_key = zip_val 
                     for concat_val in self.concat_dict[concat_key]:
                         catfile.write('\nNEWFILE\nFILENAME: %s\n\n' % (os.path.basename(concat_val)))
-                        with open(concat_val, 'rU') as f:
+                        with open(concat_val, 'r') as f:
                             for line in f:
                                 catfile.write(line)
                 

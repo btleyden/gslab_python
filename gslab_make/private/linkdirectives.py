@@ -38,9 +38,9 @@ class LinkDirectives(object):
         # Check syntax
         if self.linkeddir == '' or self.localdir=='':
             raise SyntaxError(messages.syn_error_noname)
-        if not re.search('\*',self.linkedfile) and re.search('\*',self.localfile):
+        if not re.search(r'\*',self.linkedfile) and re.search(r'\*',self.localfile):
             raise SyntaxError(messages.syn_error_wildfilename1.replace('\n',''))
-        if re.search('\*',self.localfile) and not re.search('\*$',self.localfile):
+        if re.search(r'\*',self.localfile) and not re.search(r'\*$',self.localfile):
             raise SyntaxError(messages.syn_error_wildlocalfile.replace('\n',''))
 
     # Clean
@@ -64,7 +64,7 @@ class LinkDirectives(object):
     def clean_logic(self):
         # Prepare prefix
         self.outprefix = ''
-        if re.search('\*',self.localfile):
+        if re.search(r'\*',self.localfile):
             self.outprefix = self.localfile[0:-1]
 
         # If localfile is left as a double quote, keep the same file name
@@ -88,7 +88,7 @@ class LinkDirectives(object):
             
     def create_flag_list (self):
         self.flag_list = False
-        if re.search('\*.+',self.linkedfile) or re.search('^.+\*',self.linkedfile) or (re.search('\*',self.localfile)):
+        if re.search(r'\*.+',self.linkedfile) or re.search(r'^.+\*',self.linkedfile) or (re.search(r'\*',self.localfile)):
             # Make wildcard list
             self.flag_list = True
             wildfirst,wildlast = self.linkedfile.split('*')

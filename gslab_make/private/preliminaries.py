@@ -33,7 +33,7 @@ def end_logging(LOGFILE, makelog, logtype):
     if not (metadata.makelog_started and os.path.isfile(makelog)):
         raise CritError(messages.crit_error_nomakelog % makelog)
     MAKE_LOGFILE = open(makelog, 'a')
-    MAKE_LOGFILE.write( open(LOGFILE.name, 'rU').read() )
+    MAKE_LOGFILE.write( open(LOGFILE.name, 'r').read() )
     MAKE_LOGFILE.close()
     os.remove(LOGFILE.name)
 #==========================================================
@@ -41,7 +41,7 @@ def end_logging(LOGFILE, makelog, logtype):
 def input_to_array(filename):
     # Import file
     try:
-        FILENAME = open(filename, 'rU')
+        FILENAME = open(filename, 'r')
     except:
         raise CritError(messages.crit_error_file % filename)
 
@@ -49,7 +49,7 @@ def input_to_array(filename):
     filearray = []
     for line in FILENAME:
         if ( not re.match('rev', line) and not re.match('linkpath', line)
-             and not re.match('\s*\#',line) and not re.match('\s*$',line) and not re.match('url', line)):
+             and not re.match(r'\s*\#',line) and not re.match(r'\s*$',line) and not re.match('url', line)):
             filearray.append(line.rstrip('\n'))
     FILENAME.close()
 

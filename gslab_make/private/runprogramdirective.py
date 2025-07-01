@@ -193,12 +193,12 @@ class RunProgramDirective(object):
                 print('\n\nExecute: ', command, file=LOGFILE)
                 subprocess.check_call(command, shell = True, stdout = TEMPFILE, stderr = TEMPFILE)
                 TEMPFILE.close()
-                LOGFILE.write(open(tempname, 'rU').read())
+                LOGFILE.write(open(tempname, 'r').read())
                 LOGFILE.close()
             except Exception as errmsg:
             # If fails then print errors to LOGFILE
                 TEMPFILE.close()
-                LOGFILE.write(open(tempname, 'rU').read())
+                LOGFILE.write(open(tempname, 'r').read())
                 print(messages.crit_error_bad_command % command, '\n', str(errmsg))
                 print(messages.crit_error_bad_command % command, '\n', str(errmsg), file=LOGFILE)
                 LOGFILE.close()
@@ -228,7 +228,7 @@ class RunProgramDirective(object):
                 # Append default_log to main log
                 LOGFILE = open(self.makelog, 'a')
                 try:
-                    LOGFILE.write(open(default_log, 'rU').read())
+                    LOGFILE.write(open(default_log, 'r').read())
                 except Exception as errmsg:
                     print(errmsg)
                     raise CritError(messages.crit_error_no_file % default_log)
@@ -251,7 +251,7 @@ class RunProgramDirective(object):
                 # Append default_lst to main log
                 LOGFILE = open(self.makelog, 'a')
                 try:
-                    LOGFILE.write(open(default_lst, 'rU').read())
+                    LOGFILE.write(open(default_lst, 'r').read())
                 except Exception as errmsg:
                     print(errmsg)
                     raise CritError(messages.crit_error_no_file % default_lst)

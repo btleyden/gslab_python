@@ -64,7 +64,7 @@ def read_text(input, prefix):
     if isinstance(input, str):
         input = [input]
     for file in input:
-        data += open(file, 'rU').read()
+        data += open(file, 'r').read()
     text = text_parser(prefix)
     text.feed(data)
     text.close()
@@ -129,7 +129,7 @@ def remove_trailing_leading_blanklines(list):
 
 
 def insert_text(args,text):
-    lyx_text = open(args['template'], 'rU').readlines()
+    lyx_text = open(args['template'], 'r').readlines()
     # Loop over (expanding) raw LyX text
     n = 0
     loop = True

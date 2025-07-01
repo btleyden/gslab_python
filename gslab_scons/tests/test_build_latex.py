@@ -3,7 +3,7 @@ import unittest
 import sys
 import os
 import shutil
-import mock
+from unittest import mock
 # Import gslab_scons testing helper modules
 import gslab_scons.tests._test_helpers as helpers
 import gslab_scons.tests._side_effects as fx

@@ -40,7 +40,7 @@ class SystemDirective(object):
             self.dir = self.dir + '/'
         # Flag if wildcard list needs to be compiled in subclass
         self.flag_list = []
-        if re.search('\*.+', self.file) or re.search('^.+\*', self.file) or (re.search('\*', self.outfile)):
+        if re.search(r'\*.+', self.file) or re.search(r'^.+\*', self.file) or (re.search(r'\*', self.outfile)):
             self.flag_list = 1
 
     # Error Check
@@ -58,11 +58,11 @@ class SystemDirective(object):
         # Check syntax
         if self.file=='' or self.outfile=='' or self.outdir=='':
             raise SyntaxError(messages.syn_error_noname)
-        if not re.search('\*',self.file) and re.search('\*',self.outfile):
+        if not re.search(r'\*',self.file) and re.search(r'\*',self.outfile):
             raise SyntaxError(messages.syn_error_wildfilename1.replace('\n',''))
-        if re.search('\*',self.outfile) and not re.search('\*$',self.outfile):
+        if re.search(r'\*',self.outfile) and not re.search(r'\*$',self.outfile):
             raise SyntaxError(messages.syn_error_wildoutfile.replace('\n',''))
-        if len(re.findall('\*',self.outfile)) > 1:
+        if len(re.findall(r'\*',self.outfile)) > 1:
             raise SyntaxError(messages.syn_error_wildoutfile.replace('\n',''))
             
         # Check wildcard directory non-empty
@@ -95,7 +95,7 @@ class SystemDirective(object):
 
         # Prepare prefix
         self.outprefix = ''
-        if re.search('\*',self.outfile):
+        if re.search(r'\*',self.outfile):
             self.outprefix = self.outfile[0:-1]
 
         # If outfile is left as a double quote, keep the same file name
@@ -147,7 +147,7 @@ class GitHubDirective(SystemDirective):
        
         # Flag if wildcard list needs to be compiled in subclass
         self.flag_list = []
-        if re.search('\*.+',self.file) or re.search('^.+\*',self.file) or (re.search('\*',self.outfile)):
+        if re.search(r'\*.+',self.file) or re.search(r'^.+\*',self.file) or (re.search(r'\*',self.outfile)):
             self.flag_list = 1
     
     # Obtain asset id and create download url
@@ -238,10 +238,10 @@ class SvnExportDirective(SystemDirective):
     def __init__(self, raw, LOGFILE, last_dir, last_rev, token = '@NONE@'):
         SystemDirective.__init__(self, raw, LOGFILE, last_dir, last_rev)
         # Fill in placemarkers
-        self.dir = re.sub('\%svn\%',metadata.file_loc['svn'],self.dir)
-        self.dir = re.sub('\%svnbranch\%',metadata.file_loc['svnbranch'],self.dir)
-        self.dir = re.sub('\%svn_retail2\%',metadata.file_loc['svn_retail2'],self.dir)
-        self.dir = re.sub('\%svnbranch_retail2\%',metadata.file_loc['svnbranch_retail2'],self.dir)
+        self.dir = re.sub(r'\%svn\%',metadata.file_loc['svn'],self.dir)
+        self.dir = re.sub(r'\%svnbranch\%',metadata.file_loc['svnbranch'],self.dir)
+        self.dir = re.sub(r'\%svn_retail2\%',metadata.file_loc['svn_retail2'],self.dir)
+        self.dir = re.sub(r'\%svnbranch_retail2\%',metadata.file_loc['svnbranch_retail2'],self.dir)
         # Make wildcard list
         if self.flag_list:
             svnlist = 'svn list \"%s@%s\"' % (self.dir,self.rev)
@@ -254,7 +254,7 @@ class SvnExportDirective(SystemDirective):
 
     # Error Check
     def error_check(self):
-        if not re.match('\d+$',self.rev) and self.rev!='':
+        if not re.match(r'\d+$',self.rev) and self.rev!='':
             raise SyntaxError(messages.syn_error_revnum % (self.rev,self.dir,self.file))
         if self.dir=='' and self.rev!='' or self.dir!='' and self.rev=='':
             raise LogicError(messages.logic_error_revdir.replace('\n','') % (self.dir,self.file,
@@ -285,13 +285,13 @@ class CopyDirective(SystemDirective):
     def __init__(self, raw, LOGFILE, last_dir, last_rev, token = '@NONE@'):
         SystemDirective.__init__(self, raw, LOGFILE, last_dir, last_rev)
         # Deal with any directory itemwise
-        if re.search('\*',self.file):
+        if re.search(r'\*',self.file):
             self.flag_list = 1
         # Fill in placemarkers, and dir if empty
         if self.dir=='':
             self.dir = self.last_dir
         for key in metadata.file_loc:
-            self.dir = re.sub('\%%%s\%%' % key,metadata.file_loc[key],self.dir)
+            self.dir = re.sub(r'\%%%s\%%' % key,metadata.file_loc[key],self.dir)
         # Ensure legal slashes
         self.dir = self.dir.replace('/','\\')
         # Make wildcard list

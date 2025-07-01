@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 import re
-import mock
+from unittest import mock
 from io import StringIO
 
 # Ensure that Python can find and load the GSLab libraries

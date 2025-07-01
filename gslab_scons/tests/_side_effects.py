@@ -1,6 +1,6 @@
 import os
 import re
-import mock
+from unittest import mock
 import requests
 import shutil
 import subprocess
@@ -50,7 +50,7 @@ def python_side_effect(*args, **kwargs):
     match   = helpers.command_match(command, 'python')
 
     if match.group('log'):
-        log_path = re.sub('(\s|>)', '', match.group('log'))
+        log_path = re.sub(r'(\s|>)', '', match.group('log'))
         with open(log_path, 'w') as log_file:
             log_file.write('Test log')
         with open('./test_output.txt', 'w') as target:
@@ -73,7 +73,7 @@ def make_matlab_side_effect(recognized = True):
         if re.search('^matlab', command, flags = re.I) and not recognized:
             raise subprocess.CalledProcessError(1, command)
 
-        log_match = re.search('> (?P<log>[-\.\w\/]+)', command)
+        log_match = re.search(r'> (?P<log>[-\.\w\/]+)', command)
     
         if log_match:
             log_path = log_match.group('log')
@@ -144,14 +144,14 @@ def lyx_side_effect(*args, **kwargs):
     source       = match.group('source')
     log_redirect = match.group('log_redirect')
 
-    option_type    = re.findall('^(-\w+)',  option)[0]
-    option_setting = re.findall('\s(\w+)$', option)[0]
+    option_type    = re.findall(r'^(-\w+)',  option)[0]
+    option_setting = re.findall(r'\s(\w+)$', option)[0]
 
     is_lyx = bool(re.search('^lyx$', executable, flags = re.I))
 
     # As long as output is redirected, create a log
     if log_redirect:
-        log_path = re.sub('>\s*', '', log_redirect)
+        log_path = re.sub(r'>\s*', '', log_redirect)
         with open(log_path, 'w') as log_file:
             log_file.write('Test log\n')
 
@@ -188,16 +188,16 @@ def latex_side_effect(*args, **kwargs):
     source       = match.group('source')
     log_redirect = match.group('log_redirect')
 
-    option1_type = re.findall('^(-\w+)', option1)[0]
-    interaction  = re.findall('\s(\S+)', option1)[0]
-    option2_type = re.findall('^(-\w+)', option2)[0]
-    target_file  = re.findall('\s(\S+)', option2)[0]
+    option1_type = re.findall(r'^(-\w+)', option1)[0]
+    interaction  = re.findall(r'\s(\S+)', option1)[0]
+    option2_type = re.findall(r'^(-\w+)', option2)[0]
+    target_file  = re.findall(r'\s(\S+)', option2)[0]
 
     is_pdflatex  = bool(re.search('^pdflatex$', executable, flags = re.I))
 
     # As long as output is redirected, create a log
     if log_redirect:
-        log_path = re.sub('>\s*', '', log_redirect)
+        log_path = re.sub(r'>\s*', '', log_redirect)
         with open(log_path, 'w') as log_file:
             log_file.write('Test log\n')
 
