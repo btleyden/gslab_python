@@ -9,13 +9,11 @@ from setuptools.command.install import install
 from glob import glob
  
 # Determine if the user has specified which paths to report coverage for
-is_include_arg = map(lambda x: bool(re.search('^--include=', x)), 
-                     sys.argv)
+include_indices = [i for i, arg in enumerate(sys.argv) if re.search('^--include=', arg)]
 
-if True in is_include_arg:
-    include_arg = sys.argv[is_include_arg.index(True)]
-    include_arg = sys.argv[is_include_arg.index(True)]
-    del sys.argv[is_include_arg.index(True)]
+if include_indices:
+    include_arg = sys.argv[include_indices[0]]
+    del sys.argv[include_indices[0]]
 else:
     include_arg = None
 
@@ -48,9 +46,13 @@ class CleanRepo(build_py):
     def run(self):
         # i) Remove the .egg-info or .dist-info folders
         egg_directories = glob('./*.egg-info')
-        map(shutil.rmtree, egg_directories)
+        for directory in egg_directories:
+            if os.path.exists(directory):
+                shutil.rmtree(directory)
         dist_directories = glob('./*.dist-info')
-        map(shutil.rmtree, dist_directories)
+        for directory in dist_directories:
+            if os.path.exists(directory):
+                shutil.rmtree(directory)
         # ii) Remove the ./build and ./dist directories
         if os.path.isdir('./build'):
             shutil.rmtree('./build')
@@ -58,7 +60,7 @@ class CleanRepo(build_py):
             shutil.rmtree('./dist')
 
 # Requirements
-requirements = ['requests', 'scandir', 'pymmh3']
+requirements = ['requests', 'pymmh3']
 
 setup(name         = 'GSLab_Tools',
       version      = '4.1.2',

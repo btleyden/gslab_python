@@ -3,7 +3,7 @@ import re
 import sys
 import mock
 import inspect
-import imp
+import importlib.util
 
 sys.path.append('../..')
 import gslab_scons.misc as misc
@@ -23,10 +23,12 @@ def platform_patch(platform, path):
     try:
         misc_path = '%s.misc.sys.platform' % path
         # Check whether misc_path is a valid module
-        imp.find_module(misc_path)
-        misc_patch  = mock.patch(misc_path, platform)
-        total_patch = lambda f: misc_patch(main_patch(f))
-    except ImportError:
+        if importlib.util.find_spec(misc_path) is not None:
+            misc_patch  = mock.patch(misc_path, platform)
+            total_patch = lambda f: misc_patch(main_patch(f))
+        else:
+            total_patch = main_patch
+    except (ImportError, ModuleNotFoundError):
         total_patch = main_patch
 
     return total_patch
