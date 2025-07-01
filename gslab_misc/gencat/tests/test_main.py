@@ -54,7 +54,7 @@ class test_main(unittest.TestCase):
         with zipfile.ZipFile('./test_out/zip1.zip', 'r') as zf:
             zf.extractall('./test_out/')
 
-        with open('./test_out/zip1/concat1.txt', 'rU') as f:
+        with open('./test_out/zip1/concat1.txt', 'r') as f:
             text = f.read()
 
         test_text = '\nNEWFILE\nFILENAME: file1.txt\n\nTHIS IS TEST FILE 1.' + \

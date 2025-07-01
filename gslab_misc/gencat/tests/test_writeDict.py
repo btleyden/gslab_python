@@ -39,7 +39,7 @@ class test_writeDict(unittest.TestCase):
         testcat.writeDict(d, 'test_dict.txt', 'path/to/')
         
         self.assertTrue(os.path.isfile('./test_out/test_dict.txt'))
-        with open('./test_out/test_dict.txt', 'rU') as f:
+        with open('./test_out/test_dict.txt', 'r') as f:
             lines = f.readline().strip()
         self.assertEqual(lines, 'path|file.txt')
     
@@ -51,7 +51,7 @@ class test_writeDict(unittest.TestCase):
         testcat.writeDict(d, 'test_dict.txt', 'path/to/')
         
         self.assertTrue(os.path.isfile('./test_out/test_dict.txt'))
-        with open('./test_out/test_dict.txt', 'rU') as f:
+        with open('./test_out/test_dict.txt', 'r') as f:
             lines = []
             for line in f:
                 lines.append(line.strip())
@@ -66,7 +66,7 @@ class test_writeDict(unittest.TestCase):
         testcat.writeDict(d, 'test_dict.txt', 'path/to/')
 
         self.assertTrue(os.path.isfile('./test_out/test_dict.txt'))
-        with open('./test_out/test_dict.txt', 'rU') as f:
+        with open('./test_out/test_dict.txt', 'r') as f:
             lines = f.readline().strip()
         self.assertEqual(lines, 'path|file1.txt|file2.txt')
     
@@ -77,7 +77,7 @@ class test_writeDict(unittest.TestCase):
         d = {'path': ('a/path/file.txt', )}
         testcat.writeDict(d, 'test_dict.txt', '')
 
-        with open('./test_out/test_dict.txt', 'rU') as f:
+        with open('./test_out/test_dict.txt', 'r') as f:
             lines = f.readline()
         lines = lines.strip()
         self.assertEqual(lines, 'path|a/path/file.txt')

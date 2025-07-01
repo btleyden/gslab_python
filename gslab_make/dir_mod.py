@@ -85,7 +85,7 @@ def check_manifest(manifestlog = '@DEFAULTVALUE@',
     try:
         # Open manifest log file
         try:
-            MANIFESTFILE = open(manifestlog, 'rU')
+            MANIFESTFILE = open(manifestlog, 'r')
         except Exception as errmsg:
             print(errmsg)
             raise CritError(messages.crit_error_log % manifestlog)

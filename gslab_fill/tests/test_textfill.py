@@ -48,7 +48,7 @@ class testTextfill(unittest.TestCase):
         self.check_log_in_LyX(log, log_remove_string, "textfill_")
     
     def check_log_in_LyX(self, log, log_remove_string, prefix):
-        raw_lyx = open("../../gslab_fill/tests/input/textfill_template_filled.lyx", 'rU').readlines()
+        raw_lyx = open("../../gslab_fill/tests/input/textfill_template_filled.lyx", 'r').readlines()
         raw_lyx = [re.sub(r'\\end_layout\n$', '', x) for x in raw_lyx]
         
         text = read_text(log, prefix)

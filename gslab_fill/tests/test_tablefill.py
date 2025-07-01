@@ -30,8 +30,8 @@ class testTablefill(unittest.TestCase):
                                     template = '../../gslab_fill/tests/input/tablefill_template.%s' % ext, 
                                     output   = './build/tablefill_template_filled.%s' % ext)
             self.assertIn('filled successfully', message)
-            tag_data = open('../../gslab_fill/tests/input/tablefill_template.%s' % ext, 'rU').readlines()
-            filled_data = open('./build/tablefill_template_filled.%s' % ext, 'rU').readlines()
+            tag_data = open('../../gslab_fill/tests/input/tablefill_template.%s' % ext, 'r').readlines()
+            filled_data = open('./build/tablefill_template_filled.%s' % ext, 'r').readlines()
             self.assertEqual(len(tag_data), len(filled_data))
             for n in range(len(tag_data)):
                 if ext == 'tex':
@@ -121,7 +121,7 @@ class testTablefill(unittest.TestCase):
                                     template = '../../gslab_fill/tests/input/tablefill_template.%s' % ext)
             self.assertIn('filled successfully', message)
 
-            with open('./build/tablefill_template_filled.%s' % ext, 'rU') as filled_file:
+            with open('./build/tablefill_template_filled.%s' % ext, 'r') as filled_file:
                 filled_data_args1 = filled_file.readlines()
 
             with nostderrout():
@@ -131,7 +131,7 @@ class testTablefill(unittest.TestCase):
                                                '../../gslab_fill/tests/input/tables_appendix_two.txt')
             self.assertIn('filled successfully', message)
 
-            with open('./build/tablefill_template_filled.%s' % ext, 'rU') as filled_file:
+            with open('./build/tablefill_template_filled.%s' % ext, 'r') as filled_file:
                 filled_data_args2 = filled_file.readlines()
 
             self.assertEqual(filled_data_args1, filled_data_args2)

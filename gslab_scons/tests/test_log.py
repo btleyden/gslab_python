@@ -48,7 +48,7 @@ class TestLog(unittest.TestCase):
 
         # Ensure that start_log() actually redirected standard output
         # to a log at the expected path.
-        with open('sconstruct.log', 'rU') as f:
+        with open('sconstruct.log', 'r') as f:
             log_contents = f.read()
 
         message_match = '^\*\*\* New build: \{[0-9\s\-:]+\} \*\*\*\n%s$' % test
@@ -82,7 +82,7 @@ class TestLog(unittest.TestCase):
         sys.stdout.close()
         sys.stdout = initial_stdout
 
-        with open('sconstruct.log', 'rU') as f:
+        with open('sconstruct.log', 'r') as f:
             log_contents = f.read()
 
         message_match = '^\*\*\* New build: \{[0-9\s\-:]+\} \*\*\*\n%s$' % test
@@ -169,7 +169,7 @@ class TestLog(unittest.TestCase):
         
         # Read the test log file and ensure log_timestamp() worked
         # as intended.
-        with open('test.txt', 'rU') as f:
+        with open('test.txt', 'r') as f:
             content = f.read()
             
         test_message = '*** Builder log created: {test_time_start} \n' + \
@@ -184,7 +184,7 @@ class TestLog(unittest.TestCase):
         now = '2000-01-01 0:0:0'
         mock_time.return_value = now
         gs.end_log()
-        with open('./release/sconstruct.log', 'rU') as f:
+        with open('./release/sconstruct.log', 'r') as f:
             line = f.readline()
             self.assertTrue(re.search('Build completed', line))
             self.assertTrue(re.search('\{%s\}' % now, line))

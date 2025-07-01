@@ -164,7 +164,7 @@ def add_log(*args, **kwargs):
             if not os.path.isfile(log):
                 print(messages.note_nofile % log, file=LOGFILE)
             else:
-                LOGFILE.write(open(log, 'rU').read())
+                LOGFILE.write(open(log, 'r').read())
     except:
         print_error(LOGFILE)
 

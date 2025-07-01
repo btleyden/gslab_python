@@ -52,7 +52,7 @@ def read_data(input):
     if isinstance(input, str):
         input = [input]
     for file in input:
-        data += open(file, 'rU').readlines()
+        data += open(file, 'r').readlines()
     
     return data
 
@@ -84,7 +84,7 @@ def insert_tables(args, tables):
         return insert_tables_latex(args, tables)
 
 def insert_tables_lyx(args, tables):
-    lyx_text = open(args['template'], 'rU').readlines()
+    lyx_text = open(args['template'], 'r').readlines()
     for n in range( len(lyx_text) ):
         if lyx_text[n].startswith('name "tab:'):
             tag = lyx_text[n].replace('name "tab:','').rstrip('"\n').lower()
@@ -115,7 +115,7 @@ def insert_tables_lyx(args, tables):
     return lyx_text
 
 def insert_tables_latex(args, tables):
-    lyx_text = open(args['template'], 'rU').readlines()
+    lyx_text = open(args['template'], 'r').readlines()
     for n in range( len(lyx_text) ):
         if re.search('label{tab:', lyx_text[n]):
             tag = re.sub("[\}\"\n]", "", lyx_text[n].split(':')[1]).lower()

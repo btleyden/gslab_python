@@ -243,7 +243,7 @@ class TestMisc(unittest.TestCase):
         maxit = 10
         # Test general functionality
         misc.state_of_repo(maxit)
-        logfile = open('state_of_repo.log', 'rU').read()
+        logfile = open('state_of_repo.log', 'r').read()
         self.assertIn('GIT STATUS', logfile)
         self.assertIn('FILE STATUS', logfile)
 
@@ -253,7 +253,7 @@ class TestMisc(unittest.TestCase):
             with open('state_of_repo/test_%s.txt' % i, 'w') as f:
                 f.write('Test')
         misc.state_of_repo(maxit)
-        logfile = open('state_of_repo.log', 'rU').read()
+        logfile = open('state_of_repo.log', 'r').read()
         self.assertIn('MAX ITERATIONS', logfile)
 
         # Cleanup

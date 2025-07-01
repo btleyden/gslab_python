@@ -182,7 +182,7 @@ class TestReleaseFunction(unittest.TestCase):
         # passed to upload_asset() are those specified by release()'s 
         # DriveReleaseFiles argument.
         if args['DriveReleaseFiles']:
-            with open('assets_listing.txt', 'rU') as assets:
+            with open('assets_listing.txt', 'r') as assets:
                 lines = assets.readlines()
     
             for line in lines:
