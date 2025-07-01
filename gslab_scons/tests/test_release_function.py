@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 import re
-import mock
+from unittest import mock
 import shutil
 import requests
 import copy

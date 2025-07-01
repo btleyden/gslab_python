@@ -1,7 +1,7 @@
 import os
 import re
 import sys
-import mock
+from unittest import mock
 import inspect
 import importlib.util
 

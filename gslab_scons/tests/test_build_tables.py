@@ -4,7 +4,7 @@ import sys
 import os
 import shutil
 import re
-import mock
+from unittest import mock
 
 # Ensure that Python can find and load the GSLab libraries
 os.chdir(os.path.dirname(os.path.realpath(__file__)))

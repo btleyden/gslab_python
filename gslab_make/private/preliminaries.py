@@ -49,7 +49,7 @@ def input_to_array(filename):
     filearray = []
     for line in FILENAME:
         if ( not re.match('rev', line) and not re.match('linkpath', line)
-             and not re.match('\s*\#',line) and not re.match('\s*$',line) and not re.match('url', line)):
+             and not re.match(r'\s*\#',line) and not re.match(r'\s*$',line) and not re.match('url', line)):
             filearray.append(line.rstrip('\n'))
     FILENAME.close()
 

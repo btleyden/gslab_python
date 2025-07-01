@@ -17,7 +17,7 @@ class LinksList(object):
             
         self.links_files = []
         for f1 in file_list:
-            if re.search('\*.+', f1) or re.search('^.+\*', f1) or re.search('\*', f1):
+            if re.search(r'\*.+', f1) or re.search(r'^.+\*', f1) or re.search(r'\*', f1):
                 # Make wildcard list
                 wildfirst,wildlast = f1.split('*')
                 file_dir,wildfirst = os.path.split(wildfirst)

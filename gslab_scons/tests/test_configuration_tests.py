@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 import re
-import mock
+from unittest import mock
 import subprocess
 
 # Ensure that Python can find and load the GSLab libraries
@@ -41,20 +41,13 @@ class TestConfigurationTests(unittest.TestCase):
             mock_check_python_packages.assert_called_with('3.0.2', packages) 
 
 
-    @mock.patch('%s.pkg_resources.get_distribution' % path)
+    @mock.patch('%s.version' % path)
     @mock.patch('%s.importlib.import_module'        % path)
     @mock.patch('%s.convert_packages_argument'      % path)
     def test_check_python_packages(self, mock_convert_packages, 
                                    mock_import, mock_version):
         # Setup
-        class MockVersionSideEffect(object):
-            def __init__(self):
-                self.version = '3.0.2'
-
-        def version_side_effect(*args, **kwargs):
-            return MockVersionSideEffect()
-
-        mock_version.side_effect          = version_side_effect
+        mock_version.return_value = '3.0.2'
         mock_convert_packages.side_effect = lambda x: ['yaml', 'os']
         mock_import.side_effect           = lambda x: None
 

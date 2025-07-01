@@ -3,7 +3,7 @@ import sys
 import os
 import re
 import shutil
-import mock
+from unittest import mock
 import datetime
 
 # Ensure that Python can find and load the GSLab libraries

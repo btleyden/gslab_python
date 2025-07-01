@@ -43,36 +43,36 @@ class testTablefill(unittest.TestCase):
         tag_line    = tag_line.split('&')
         filled_line = filled_line.split('&')
         for col in range(len(tag_line)):
-            if re.match('^.*#\d+#', tag_line[col]) or re.match('^.*#\d+,#', tag_line[col]):
+            if re.match(r'^.*#\d+#', tag_line[col]) or re.match(r'^.*#\d+,#', tag_line[col]):
                 entry_tag = re.split('#', tag_line[col])[1]
                 decimal_places = int(entry_tag.replace(',', ''))
                 if decimal_places > 0:
-                    self.assertTrue(re.search('\.', filled_line[col]))
-                    decimal_part = re.split('\.', filled_line[col])[1]
+                    self.assertTrue(re.search(r'\.', filled_line[col]))
+                    decimal_part = re.split(r'\.', filled_line[col])[1]
                     non_decimal = re.compile(r'[^\d.]+')
                     decimal_part = non_decimal.sub('', decimal_part)
                     self.assertEqual(len(decimal_part), decimal_places)
                 else:
-                    self.assertFalse(re.search('\.', filled_line[col]))
-                if re.match('^.*#\d+,#', tag_line[col]):
-                    integer_part = re.split('\.', filled_line[col])[0]
+                    self.assertFalse(re.search(r'\.', filled_line[col]))
+                if re.match(r'^.*#\d+,#', tag_line[col]):
+                    integer_part = re.split(r'\.', filled_line[col])[0]
                     if len(integer_part) > 3:
                         self.assertEqual(integer_part[-4], ',')
 
     def tag_compare_lyx(self, tag_line, filled_line):
-        if re.match('^.*#\d+#', tag_line) or re.match('^.*#\d+,#', tag_line):
+        if re.match(r'^.*#\d+#', tag_line) or re.match(r'^.*#\d+,#', tag_line):
             entry_tag = re.split('#', tag_line)[1]
             decimal_places = int(entry_tag.replace(',', ''))
             if decimal_places > 0:
-                self.assertTrue(re.search('\.', filled_line))
-                decimal_part = re.split('\.', filled_line)[1]
+                self.assertTrue(re.search(r'\.', filled_line))
+                decimal_part = re.split(r'\.', filled_line)[1]
                 non_decimal = re.compile(r'[^\d.]+')
                 decimal_part = non_decimal.sub('', decimal_part)
                 self.assertEqual(len(decimal_part), decimal_places)
             else:
-                self.assertFalse(re.search('\.', filled_line))
-            if re.match('^.*#\d+,#', tag_line):
-                integer_part = re.split('\.', filled_line)[0]
+                self.assertFalse(re.search(r'\.', filled_line))
+            if re.match(r'^.*#\d+,#', tag_line):
+                integer_part = re.split(r'\.', filled_line)[0]
                 if len(integer_part) > 3:
                     self.assertEqual(integer_part[-4], ',')
 

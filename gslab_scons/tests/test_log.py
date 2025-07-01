@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 import re
-import mock
+from unittest import mock
 import shutil
 # Import gslab_scons testing helpers
 import gslab_scons.tests._test_helpers as helpers
