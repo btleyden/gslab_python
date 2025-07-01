@@ -9,3 +9,5 @@
 *.ipynb
 .ipynb_checkpoints/
 build/
+.pytest_cache/
+test.log
